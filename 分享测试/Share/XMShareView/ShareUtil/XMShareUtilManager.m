@@ -459,9 +459,9 @@
         }else if (tempResp.errorCode == DTOpenAPIErrorCodeCommon){
             message = tempResp.errorMessage;
         }else if (tempResp.errorCode == DTOpenAPIErrorCodeUserCancel){
-            message = tempResp.errorMessage;
+            message = @"取消分享";
         }else if (tempResp.errorCode == DTOpenAPIErrorCodeSendFail){
-            message = tempResp.errorMessage;
+            message = @"分享失败";
         }else if (tempResp.errorCode == DTOpenAPIErrorCodeAuthDeny){
             message = tempResp.errorMessage;
         }
