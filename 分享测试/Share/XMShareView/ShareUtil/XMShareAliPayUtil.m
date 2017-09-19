@@ -8,33 +8,50 @@
 
 #import "XMShareAliPayUtil.h"
 
-//#import "APOpenAPIObject.h"
 
 @implementation XMShareAliPayUtil
 
-- (void)sendShareMessage
+- (void)sendShareMessage:(XMShareAP_ContentType)shareType
 {
     //  创建消息载体 APMediaMessage 对象
     APMediaMessage *message = [[APMediaMessage alloc] init];
     
-    //  创建文本类型的消息对象
-//    APShareTextObject *textObj = [[APShareTextObject alloc] init];
-//    textObj.text = @"此处填充发送到支付宝的纯文本信息";
-    
-    APShareWebObject *webObj = [[APShareWebObject alloc] init];
-    webObj.wepageUrl = self.shareUrl;
-    
-    //  回填 APMediaMessage 的消息对象
-    message.mediaObject = webObj;
-    
+
+    switch (shareType) {
+        case XMShareAP_Text_Type:
+        {
+        //  创建文本类型的消息对象
+            APShareTextObject *textObj = [[APShareTextObject alloc] init];
+            textObj.text = @"此处填充发送到支付宝的纯文本信息";
+        }
+            break;
+        case XMShareAP_Image_Type:
+        {
+            APShareImageObject *imageObj = [[APShareImageObject alloc] init];
+            imageObj.imageData = self.shareImgData;
+            imageObj.imageUrl = self.shareImgUrl;
+            message.mediaObject = imageObj;
+        }
+            break;
+        case XMShareAP_Url_Type:
+        {
+            APShareWebObject *webObj = [[APShareWebObject alloc] init];
+            webObj.wepageUrl = self.shareUrl;
+            
+            //  回填 APMediaMessage 的消息对象
+            message.mediaObject = webObj;
+        }
+            break;
+        default:
+            break;
+    }
+
+
     message.title = self.shareTitle;
     message.desc = self.shareText;
-    message.thumbUrl = self.shareImgUrl;
+    message.thumbData = self.shareThumbnailData;
+    message.thumbUrl = self.shareThumbnailUrl;
     
-    APShareImageObject *imageObj = [[APShareImageObject alloc] init];
-    imageObj.imageUrl = self.shareImgUrl;
-    
-    message.mediaObject = imageObj;
     
     //  创建发送请求对象
     APSendMessageToAPReq *request = [[APSendMessageToAPReq alloc] init];

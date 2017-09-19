@@ -18,7 +18,7 @@
 
 #define APP_KEY_WEIBO_RedirectURL @"http://www.sina.com"
 ///支付宝
-#define APP_KEY_ALIPAY            @"2016112303146147"
+#define APP_KEY_ALIPAY            @"2016112303146147" //@"2015030200033293"
 ///钉钉
 #define APP_KEY_DINGTALK            @"dingoajxhpsum1lrejhsmu"
 ///  分享图片

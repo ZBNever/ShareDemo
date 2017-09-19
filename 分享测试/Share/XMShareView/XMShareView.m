@@ -31,14 +31,24 @@ static const NSInteger numbersOfItemInLine = 3;
 
 @implementation XMShareView
 
+- (instancetype)initWithFrame:(CGRect)frame shareArr:(NSArray *)shareArray{
+
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self ShareToThird:shareArray];
+        [self initUI];
+        
+    }
+    return self;
+    
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
     
     self = [super initWithFrame:frame];
     if (self) {
-        
-        [self configureData];
+    
         [self initUI];
         
     }
@@ -51,7 +61,7 @@ static const NSInteger numbersOfItemInLine = 3;
  */
 - (void)initUI
 {
-    
+
     //  背景色黑色半透明
     self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
     
@@ -226,7 +236,7 @@ static const NSInteger numbersOfItemInLine = 3;
         
     }else if (sender.tag == SHARE_ITEM_ALIPAY_SESSION){
     
-        [util shareToAliPay:XMShare_Media_Type];
+        [util shareToAliPay:XMShareAP_Url_Type];
         
     }else if ( sender.tag == SHARE_ITEM_DINGTALK ) {
         
@@ -254,5 +264,83 @@ static const NSInteger numbersOfItemInLine = 3;
     
 }
 
+- (void)ShareToThird:(NSArray *)shareArr{
+
+    BOOL hadInstalledWeixin = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"weixin://"]];
+    iconList = [[NSMutableArray alloc] init];
+    textList = [[NSMutableArray alloc] init];
+    for (NSString *item in shareArr) {
+        switch ([item integerValue]) {
+            case SHARE_ITEM_WEIXIN_SESSION:
+            {
+
+                if(hadInstalledWeixin){
+                    
+                    [iconList addObject:@"icon_share_wechat@2x"];
+                    
+                    [textList addObject:NSLocalizedString(@"微信好友", nil)];
+                    
+                }
+            }
+                break;
+            case SHARE_ITEM_WEIXIN_TIMELINE:
+            {
+                if (hadInstalledWeixin) {
+                    [iconList addObject:@"icon_share_moment@2x"];
+                    [textList addObject:NSLocalizedString(@"朋友圈", nil)];
+                }
+                
+            }
+                break;
+            case SHARE_ITEM_QQ:
+            {
+                [iconList addObject:@"icon_share_qq@2x"];
+                
+                [textList addObject:NSLocalizedString(@"QQ", nil)];
+                
+            }
+                break;
+            case SHARE_ITEM_QZONE:
+            {
+                [iconList addObject:@"icon_share_qzone@2x"];
+                [textList addObject:NSLocalizedString(@"QQ空间", nil)];
+            }
+                break;
+            case SHARE_ITEM_WEIBO:
+            {
+                [iconList addObject:@"icon_share_webo@2x"];
+                [textList addObject:NSLocalizedString(@"微博", nil)];
+            }
+                break;
+            case SHARE_ITEM_ALIPAY_SESSION:
+            {
+                [iconList addObject:@"icon_share_alipay@2x"];
+                [textList addObject:NSLocalizedString(@"支付宝", nil)];
+            }
+                break;
+            case SHARE_ITEM_DINGTALK:
+            {
+                [iconList addObject:@"icon_share_dingtalk@2x"];
+                [textList addObject:NSLocalizedString(@"钉钉", nil)];
+            }
+                break;
+            case SHARE_ITEM_MESSAGE:
+            {
+                [iconList addObject:@"icon_share_message@2x"];
+                [textList addObject:NSLocalizedString(@"短信", nil)];
+            }
+                break;
+            case SHARE_ITEM_EMAIL:
+            {
+                [iconList addObject:@"icon_share_email@2x"];
+                [textList addObject:NSLocalizedString(@"邮件", nil)];
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    
+}
 
 @end

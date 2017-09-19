@@ -83,7 +83,7 @@
     
 }
 
-- (void)shareToAliPay:(XMShareContentType)shareType
+- (void)shareToAliPay:(XMShareAP_ContentType)shareType
 {
     XMShareAliPayUtil *util = [XMShareAliPayUtil sharedInstance];
     util.shareTitle = self.shareTitle;
@@ -94,7 +94,7 @@
     util.shareThumbnailData = self.shareThumbnailData;
     util.shareThumbnailUrl = self.shareThumbnailUrl;
 
-    [util sendShareMessage];
+    [util sendShareMessage:shareType];
     
 }
 - (void)shareToDingTalk:(XMShareDingTalk_ContentType)shareType{
@@ -163,69 +163,69 @@
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result{
     
 //    NSLog(@"result:%lu",result);
-    NSString *messag;
+    NSString *message;
     switch (result) {
         case 0:
         {
-            messag = @"取消分享";
+            message = @"取消分享";
         }
             break;
         case 1:
         {
-            messag = @"分享成功";
+            message = @"分享成功";
         }
             break;
         case 2:
         {
-            messag = @"分享失败";
+            message = @"分享失败";
         }
             break;
         default:
         {
-            messag = @"分享失败";
+            message = @"分享失败";
         }
             break;
     }
-    
+    [self shareFinished:message];
     [[self getCurrentVC] dismissViewControllerAnimated:YES completion:^{
-        showAlert(messag)
+        showAlert(message)
     }];
     
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
     NSLog(@"result:%lu",result);
-    NSString *messag;
+    NSString *message;
     switch (result) {
         case 0:
         {
-            messag = @"取消分享";
+            message = @"取消分享";
         }
             break;
         case 1:
         {
-            messag = @"保存成功";
+            message = @"保存成功";
         }
             break;
         case 2:
         {
-            messag = @"分享成功";
+            message = @"分享成功";
         }
             break;
         case 3:
         {
-            messag = @"分享失败";
+            message = @"分享失败";
         }
             break;
         default:
         {
-            messag = @"分享失败";
+            message = @"分享失败";
         }
             break;
     }
-    
+    [self shareFinished:message];
     [[self getCurrentVC] dismissViewControllerAnimated:YES completion:^{
-        showAlert(messag)
+        showAlert(message)
     }];
 }
 
@@ -375,7 +375,9 @@
             message = @"分享失败";
             break;
     }
+    [self shareFinished:message];
     showAlert(message);
+    
 }
 
 /**
@@ -445,7 +447,7 @@
         if (tempResp.errCode == APSuccess) {
             message = @"分享成功";
         } else {
-            message = @"分享失败";
+            message = tempResp.errStr;
             
         }
     }
@@ -470,7 +472,15 @@
             
         }
     }
+    
     showAlert(message);
+}
+
+- (void)shareFinished:(NSString *)message{
+
+    if ([self.delegate respondsToSelector:@selector(shareFinishedResq:)]) {
+        [self.delegate shareFinishedResq:message];
+    }
 }
 
 //获取当前屏幕显示的viewcontroller

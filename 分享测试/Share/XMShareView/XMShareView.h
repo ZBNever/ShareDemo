@@ -28,10 +28,7 @@ typedef NS_ENUM(NSInteger, SHARE_ITEM){
     
     //  支付宝好友
     SHARE_ITEM_ALIPAY_SESSION,
-    
-    //  支付宝动态
-    SHARE_ITEM_ALIPAY_TIMELINE,
-    
+
     //  钉钉
     SHARE_ITEM_DINGTALK,
     
@@ -52,6 +49,8 @@ typedef NS_ENUM(NSInteger, SHARE_ITEM){
     //  文字项
     NSMutableArray *textList;
 }
+//  分享平台
+@property (nonatomic, strong) NSArray *shareToThirdArr;
 
 //  分享标题
 @property (nonatomic, strong) NSString *shareTitle;
@@ -63,7 +62,6 @@ typedef NS_ENUM(NSInteger, SHARE_ITEM){
 @property (nonatomic, strong) NSString *shareUrl;
 
 //  分享图片数据(小于10M,优先级高于图片链接)
-
 @property (nonatomic, strong) NSData *shareImgData;
 //  分享图片链接
 @property (nonatomic, strong) NSString *shareImgUrl;
@@ -73,5 +71,9 @@ typedef NS_ENUM(NSInteger, SHARE_ITEM){
 
 //  分享缩略图链接地址
 @property (nonatomic, strong) NSString *shareThumbnailUrl;
+
+- (instancetype)initWithFrame:(CGRect)frame shareArr:(NSArray *)shareArray;
+
+
 @end
 

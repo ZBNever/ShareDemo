@@ -13,6 +13,6 @@
 
 + (instancetype)sharedInstance;
 
-- (void)sendShareMessage;
+- (void)sendShareMessage:(XMShareAP_ContentType)shareType;
 
 @end

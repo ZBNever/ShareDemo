@@ -23,8 +23,16 @@
 #import "APOpenAPI.h"
 #import <DTShareKit/DTOpenKit.h>
 
+@protocol XMShareUtilManagerDelegate <NSObject>
+
+@optional
+- (void)shareFinishedResq:(NSString *)message;
+
+@end
 
 @interface XMShareUtilManager : NSObject<WeiboSDKDelegate, QQApiInterfaceDelegate,WXApiDelegate,APOpenAPIDelegate,MFMessageComposeViewControllerDelegate,MFMailComposeViewControllerDelegate,DTOpenAPIDelegate>
+
+@property (nonatomic,   weak) id<XMShareUtilManagerDelegate> delegate;
 
 //  分享标题
 @property (nonatomic, strong) NSString *shareTitle;
@@ -60,7 +68,7 @@
 /** 分享到新浪微博 */
 - (void)shareToWeibo:(XMShareContentType)shareType;
 /** 分享到支付宝好友 */
-- (void)shareToAliPay:(XMShareContentType)shareType;
+- (void)shareToAliPay:(XMShareAP_ContentType)shareType;
 /** 分享到钉钉 */
 - (void)shareToDingTalk:(XMShareDingTalk_ContentType)shareType;
 /** 分享到短信 */

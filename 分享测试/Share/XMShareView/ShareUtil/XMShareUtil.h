@@ -25,6 +25,13 @@ typedef enum : NSUInteger {
     XMShareQQ_Video_Type,
 } XMShareQQ_ContentType;
 
+/** AliPay分享的消息类型 */
+typedef enum : NSUInteger {
+    XMShareAP_Text_Type,
+    XMShareAP_Image_Type,
+    XMShareAP_Url_Type,
+} XMShareAP_ContentType;
+
 /** 钉钉分享的消息类型 */
 typedef enum : NSUInteger {
     XMShareDingTalk_Text_Type,
@@ -33,6 +40,7 @@ typedef enum : NSUInteger {
     XMShareDingTalk_Audio_Type,
     XMShareDingTalk_Video_Type,
 } XMShareDingTalk_ContentType;
+
 
 
 @interface XMShareUtil : NSObject
@@ -61,7 +69,6 @@ typedef enum : NSUInteger {
  *  分享图片链接地址
  */
 @property (nonatomic, strong) NSString *shareImgUrl;
-
 
 /**
  *  分享缩略图数据(小于32K,优先级高于图片链接)
